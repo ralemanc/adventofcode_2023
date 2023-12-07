@@ -27,4 +27,14 @@ class TrebuchetTests {
         });
   }
 
+  @Test
+  void testCalibration() {
+    NonInteractiveShellSession session= client.nonInterative("run", "src/test/resources/calibration.txt").run();
+
+    await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+      ShellAssertions.assertThat(session.screen())
+          .containsText("142");
+    });
+  }
+
 }
