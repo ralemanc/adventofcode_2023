@@ -8,22 +8,17 @@ import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
-public class RunCommand {
-
-  //Wrong values 53965, 54511,53965, 53965, 54053, 54076
+class TrebuchetCommand {
 
   private static final char ZERO = '0';
   private static final char NINE = '9';
@@ -32,7 +27,7 @@ public class RunCommand {
   private static List<String> digits = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
 
   @ShellMethod
-  public String run(@ShellOption(defaultValue = "") String fileName) throws IOException, URISyntaxException {
+  public String trebuchet(@ShellOption(defaultValue = "") String fileName) throws IOException, URISyntaxException {
     final var file = getFile(fileName);
     final var total = Files.lines(file).parallel()
         .map(this::convertDigit)
@@ -41,7 +36,7 @@ public class RunCommand {
     return String.valueOf(total);
   }
 
-  public String convertDigit(final String line) {
+  private String convertDigit(final String line) {
     //System.out.print(line + " ");
     final var nextDigitPos = new AtomicInteger(0);
     final var totalPos = new AtomicInteger(0);
@@ -76,7 +71,7 @@ public class RunCommand {
     };
   }
 
-  public Integer digitFromLine(final String line) {
+  private Integer digitFromLine(final String line) {
     char left = '0';
     char right = '0';
     for (int i = 0; i < line.length(); i++) {
@@ -102,7 +97,7 @@ public class RunCommand {
   private Path getFile(final String fileName) throws URISyntaxException {
     //TODO Improve file finding
     if ("".equals(fileName)) {
-     return Paths.get(getClass().getClassLoader().getResource("calibration.txt").toURI());
+     return Paths.get(getClass().getClassLoader().getResource("calibration_day1.txt").toURI());
     }
     else {
       return Paths.get(fileName);
