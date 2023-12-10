@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +18,11 @@ import org.springframework.shell.standard.ShellOption;
 @ShellComponent
 class CubeConundrumCommand {
 
+  private static final String DEFAULT_FILE_NAME = "cube_game_day2.txt";
+
   @ShellMethod
   public String possibleCubes(@ShellOption(defaultValue = "") String fileName, @ShellOption(defaultValue = "12 red, 13 green, 14 blue") String bag) throws IOException, URISyntaxException {
-    final var file = getFile(fileName);
+    final var file = FileUtil.getFile(fileName, DEFAULT_FILE_NAME);
     final var cubesInTheBag = this.readCubes(bag);
 
     final var games = readGames(file);
@@ -36,7 +37,7 @@ class CubeConundrumCommand {
 
   @ShellMethod
   public String powerCubes(@ShellOption(defaultValue = "") String fileName) throws IOException, URISyntaxException {
-    final var file = this.getFile(fileName);
+    final var file = FileUtil.getFile(fileName, DEFAULT_FILE_NAME);
 
     final var games = readGames(file);
 
@@ -86,16 +87,6 @@ class CubeConundrumCommand {
         .collect(Collectors.toMap(
             a -> Integer.valueOf(a[0].replace("Game ", "")),
             a-> readSetCubes(a[1])));
-  }
-
-  private Path getFile(final String fileName) throws URISyntaxException {
-    //TODO Improve file finding
-    if ("".equals(fileName)) {
-      return Paths.get(getClass().getClassLoader().getResource("cube_game_day2.txt").toURI());
-    }
-    else {
-      return Paths.get(fileName);
-    }
   }
 
 }

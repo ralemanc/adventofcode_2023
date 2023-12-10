@@ -28,7 +28,7 @@ class TrebuchetCommand {
 
   @ShellMethod
   public String trebuchet(@ShellOption(defaultValue = "") String fileName) throws IOException, URISyntaxException {
-    final var file = getFile(fileName);
+    final var file = FileUtil.getFile(fileName, "calibration_day_1.txt");
     final var total = Files.lines(file).parallel()
         .map(this::convertDigit)
         .map(this::digitFromLine)
@@ -92,16 +92,6 @@ class TrebuchetCommand {
     final var value = Integer.valueOf(left + "" + right);
     //System.out.println(value);
     return value;
-  }
-
-  private Path getFile(final String fileName) throws URISyntaxException {
-    //TODO Improve file finding
-    if ("".equals(fileName)) {
-     return Paths.get(getClass().getClassLoader().getResource("calibration_day1.txt").toURI());
-    }
-    else {
-      return Paths.get(fileName);
-    }
   }
 
   private List<Entry<Integer, String>> getOccurrences(final String line, final String value) {
