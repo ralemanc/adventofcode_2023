@@ -25,6 +25,7 @@ class GearRatiosCommand {
   @ShellMethod
   public String gear_power(@ShellOption(defaultValue = "") String fileName) throws URISyntaxException, IOException {
     final var file = FileUtil.getFile(fileName, "engine_schematic_day3.txt");
+    //TODO: Rename this wrong name
     Set<Set<String>> powers = new HashSet<>();
     Map<String, Tuple2<Integer, Integer>> numbers = new HashMap<>();
     int id = 0;
