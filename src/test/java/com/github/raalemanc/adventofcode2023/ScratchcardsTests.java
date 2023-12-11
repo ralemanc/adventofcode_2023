@@ -20,9 +20,10 @@ class ScratchcardsTests {
   ShellTestClient client;
 
   private static final String SCRATCHCARDS_COMMAND = "scratchcards";
+  private static final String SCRATCHCARDS_COMMAND_COPIES = "scratchcards_copies";
 
   @Test
-  void testScratchcardsDay1Part1() {
+  void testScratchcardsDay4Part1() {
     final var expectedValue = "13";
     NonInteractiveShellSession session= client.nonInterative(SCRATCHCARDS_COMMAND, "src/test/resources/cards_day4_part1.txt").run();
 
@@ -33,11 +34,21 @@ class ScratchcardsTests {
   }
 
   @Test
-  void testGearDay3Part2_DirectCall() throws URISyntaxException, IOException {
-    final var expectedValue = "13";
+  void testScratchcardsDay4Part2() {
+    final var expectedValue = "30";
+    NonInteractiveShellSession session= client.nonInterative(SCRATCHCARDS_COMMAND_COPIES, "src/test/resources/cards_day4_part2.txt").run();
+
+    await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+      ShellAssertions.assertThat(session.screen())
+          .containsText(expectedValue);
+    });
+  }
+  @Test
+  void Scratchcards4Part2_DirectCall() throws URISyntaxException, IOException {
+    final var expectedValue = "30";
     ScratchcardsCommand gearRatiosCommand = new ScratchcardsCommand();
 
-    final var result = gearRatiosCommand.scratchcards("src/test/resources/cards_day4_part1.txt");
+    final var result = gearRatiosCommand.scratchcards_copies("src/test/resources/cards_day4_part2.txt");
 
     assertEquals(expectedValue, result);
 
