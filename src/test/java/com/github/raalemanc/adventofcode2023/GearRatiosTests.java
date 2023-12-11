@@ -34,11 +34,22 @@ class GearRatiosTests {
   }
 
   @Test
-  void testGearDay3Part1_DirectCall() throws URISyntaxException, IOException {
-    final var expectedValue = "4361";
+  void testGearDay3SolutionDay1Part1() {
+    final var expectedValue = "540131";
+    NonInteractiveShellSession session= client.nonInterative(GEAR_COMMAND, "src/test/resources/engine_schematic_day3.txt").run();
+
+    await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+      ShellAssertions.assertThat(session.screen())
+          .containsText(expectedValue);
+    });
+  }
+
+  @Test
+  void testGearDay3Part2_DirectCall() throws URISyntaxException, IOException {
+    final var expectedValue = "467835";
     GearRatiosCommand gearRatiosCommand = new GearRatiosCommand();
 
-    final var result = gearRatiosCommand.gear("src/test/resources/engine_schematic_day3_part1.txt");
+    final var result = gearRatiosCommand.gear_power("src/test/resources/engine_schematic_day3_part2.txt");
 
     assertEquals(expectedValue, result);
 
