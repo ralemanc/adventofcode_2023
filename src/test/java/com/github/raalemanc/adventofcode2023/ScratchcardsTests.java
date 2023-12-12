@@ -46,9 +46,9 @@ class ScratchcardsTests {
   @Test
   void Scratchcards4Part2_DirectCall() throws URISyntaxException, IOException {
     final var expectedValue = "30";
-    ScratchcardsCommand gearRatiosCommand = new ScratchcardsCommand();
+    ScratchcardsCommand command = new ScratchcardsCommand();
 
-    final var result = gearRatiosCommand.scratchcards_copies("src/test/resources/cards_day4_part2.txt");
+    final var result = command.scratchcards_copies("src/test/resources/cards_day4_part2.txt");
 
     assertEquals(expectedValue, result);
 
